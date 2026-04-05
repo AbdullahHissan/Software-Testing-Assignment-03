@@ -1,0 +1,38 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="DataFlowIssue" enabled="true" level="INFORMATION" enabled_by_default="true">
+      <option name="SUGGEST_NULLABLE_ANNOTATIONS" value="false" />
+      <option name="DONT_REPORT_TRUE_ASSERT_STATEMENTS" value="false" />
+    </inspection_tool>
+    <inspection_tool class="SimplifiableAssertion" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="TestFailedLine" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="VulnerableLibrariesLocal" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="isIgnoringEnabled" value="true" />
+      <option name="ignoredModules">
+        <list>
+          <option value="JUnitTestingAssignment3" />
+          <option value="JUnitTestingAssignment3" />
+          <option value="JUnitTestingAssignment3" />
+          <option value="JUnitTestingAssignment3" />
+        </list>
+      </option>
+      <option name="ignoredPackages">
+        <list>
+          <option value="org.apache.commons:commons-compress:1.21" />
+          <option value="commons-io:commons-io:2.11.0" />
+          <option value="org.apache.commons:commons-lang3:3.12.0" />
+          <option value="commons-beanutils:commons-beanutils:1.9.4" />
+        </list>
+      </option>
+      <option name="ignoredReasons">
+        <list>
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

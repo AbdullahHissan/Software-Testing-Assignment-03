@@ -1,0 +1,83 @@
+package org.example;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.stream.Stream;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Tag("integration")
+public final class IntegrationCartTest {
+
+    private Cart cart;
+
+    private IntegrationCartTest() {
+    }
+
+    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.Contract(value = " -> new", pure = true)
+    public static IntegrationCartTest createIntegrationCartTest() {
+        return new IntegrationCartTest();
+    }
+
+    @BeforeEach
+    void setup() {
+        cart = new Cart();
+    }
+
+    public static <Arguments> Stream<Arguments> productData() {
+        Stream<T> tStream;
+        tStream = Stream.of(
+                Arguments.of("Apple", 100, 100),
+                Arguments.of("Banana", 50, 50),
+                Arguments.of("Orange", 75, 75),
+                Arguments.of("Book", 20, 20),
+                Arguments.of("Laptop", 1200, 1200)
+        );
+        return (Stream<Arguments>) tStream;
+    }
+
+    @Order(1)
+    @ParameterizedTest
+    @MethodSource("productData")
+    void testProductIntegration(String name, int price, int expected) {
+        Product p = new Product(name, price);
+        cart.addProduct(p);
+        assertEquals(expected, cart.getTotal());
+    }
+
+    @Order(2)
+    @Test
+    void testMultipleProductsIntegration() {
+        cart.addProduct(new Product("A", 100));
+        cart.addProduct(new Product("B", 200));
+        cart.addProduct(new Product("C", 300));
+        assertEquals(600, cart.getTotal());
+        assertEquals(3, cart.getItemCount());
+    }
+
+    @Order(3)
+    @Test
+    void testGetProductsUnmodifiable() {
+        cart.addProduct(new Product("X", 50));
+        var products = cart.getProducts();
+        assertThrows(UnsupportedOperationException.class, () -> products.add(new Product("Y", 10)));
+    }
+
+    @Order(4)
+    @Test
+    void testToString() {
+        cart.addProduct(new Product("Test", 99));
+        String result = cart.toString();
+        assertTrue(result.contains("items=1"));
+        assertTrue(result.contains("total=99"));
+    }
+
+    @Order(5)
+    @Test
+    void testNullProductHandling() {
+        assertThrows(NullPointerException.class, () -> cart.addProduct(null));
+    }
+}
